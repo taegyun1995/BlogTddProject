@@ -1,4 +1,4 @@
-package tdd.blog.health;
+package tdd.blogProject.health;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
