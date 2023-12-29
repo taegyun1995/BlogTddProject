@@ -17,7 +17,6 @@ public class Blog {
     private BlogRepository blogRepository;
     private User user;
     private List<Post> posts;
-
     private BlogTitle title;
 
     @Builder
@@ -28,6 +27,21 @@ public class Blog {
         this.title = title;
     }
 
+    public static Blog of(BlogRepository blogRepository, User user, BlogTitle title) {
+        return Blog.builder()
+                .blogRepository(blogRepository)
+                .user(user)
+                .posts(new ArrayList<>())
+                .title(title)
+                .build();
+    }
+
+    public void publish() {
+        validationBlogPublish(blogRepository, user, title);
+
+        blogRepository.publishBlog(this);
+    }
+
     public void deleteBlog() {
         if (!blogRepository.existBlogByUserAndTitle(user, title)) {
             throw new IllegalStateException("해당 사용자의 블로그가 존재하지 않습니다.");
@@ -36,22 +50,7 @@ public class Blog {
         blogRepository.deleteBlog(this);
     }
 
-    public static Blog of(BlogRepository blogRepository, User user, BlogTitle title) {
-        validationBlogCreate(blogRepository, user, title);
-
-        Blog blog = Blog.builder()
-                .blogRepository(blogRepository)
-                .user(user)
-                .posts(new ArrayList<>())
-                .title(title)
-                .build();
-
-        blogRepository.createBlog(blog);
-
-        return blog;
-    }
-
-    private static void validationBlogCreate(BlogRepository blogRepository, User user, BlogTitle title) {
+    private void validationBlogPublish(BlogRepository blogRepository, User user, BlogTitle title) {
         if (blogRepository.existBlogByTitle(title)) {
             throw new IllegalStateException("이미 사용중인 블로그명입니다.");
         }

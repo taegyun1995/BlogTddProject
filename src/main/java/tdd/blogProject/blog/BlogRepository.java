@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface BlogRepository {
 
-    void createBlog(Blog blog);
+    void publishBlog(Blog blog);
 
     Optional<Blog> getBlogByUser(User user);
 

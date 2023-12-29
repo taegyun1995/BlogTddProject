@@ -1,12 +1,8 @@
 package tdd.blogProject.blog;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import tdd.blogProject.user.User;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,32 +13,57 @@ public class BlogTdd {
     BlogRepository sut;
     User mockUser;
     BlogTitle mockTitle;
+    Blog blog;
 
     @BeforeEach
     void setUp() {
         sut = mock(BlogRepository.class);
         mockUser = mock(User.class);
         mockTitle = mock(BlogTitle.class);
+        blog = Blog.of(sut, mockUser, mockTitle);
     }
 
     @Nested
     @DisplayName("블로그 개설")
-    class CreateBlog {
+    class PublishBlog {
         @Test
-        @DisplayName("사용자가 최초로 블로그를 개설했다 :)")
-        void testCreateBlogByUser() {
-            Blog blog = Blog.of(sut, mockUser, mockTitle);
+        @DisplayName("사용자가 블로그를 개설했어요 :)")
+        void testPublishBlog() {
+            blog.publish();
 
+            assertEquals(mockUser, blog.getUser());
+            assertEquals(mockTitle, blog.getTitle());
             assertEquals(0, blog.getPosts().size());
-            verify(sut).createBlog(blog);
+            verify(sut, times(1)).publishBlog(blog);
         }
 
         @Test
-        @DisplayName("이미 블로그를 개설한 사용자입니다..ㅠㅠ")
-        void testAlreadyCreateBlogByUser() {
-            when(sut.getBlogByUser(mockUser)).thenReturn(Optional.of(new Blog()));
+        @DisplayName("이미 블로그를 개설한 사용자입니다.. 흑..")
+        void testAlreadyPublishBlogByUser() {
+            blog.publish();
 
-            assertThrows(IllegalStateException.class, () -> Blog.of(sut, mockUser, mockTitle));
+            when(sut.getBlogByUser(mockUser)).thenReturn(Optional.of(blog));
+
+            assertThrows(IllegalStateException.class, blog::publish);
+            verify(sut, times(1)).publishBlog(blog);
+        }
+
+        @Test
+        @DisplayName("블로그를 개설할 수 없다는데요..? RuntimeException")
+        void testNotPublishBlogByRuntime() {
+            doThrow(new RuntimeException("블로그를 개설할 수 없어요..")).when(sut).publishBlog(blog);
+
+            assertThrows(RuntimeException.class, blog::publish);
+            verify(sut, times(1)).publishBlog(blog);
+        }
+
+        @Test
+        @DisplayName("블로그를 개설할 수 없다는데요..? IllegalStateException")
+        void testNotPublishBlogByIllegal() {
+            doThrow(new IllegalStateException("블로그를 개설할 수 없어요..")).when(sut).publishBlog(blog);
+
+            assertThrows(IllegalStateException.class, blog::publish);
+            verify(sut, times(1)).publishBlog(blog);
         }
     }
 
@@ -50,9 +71,9 @@ public class BlogTdd {
     @DisplayName("블로그 검색")
     class SearchBlog {
         @Test
-        @DisplayName("특정 사용자의 블로그를 검색합니다 :)")
+        @DisplayName("특정 사용자의 블로그를 검색할 수 있어요!!!!")
         void testSearchBlogByUser() {
-            when(sut.searchBlogByUser(mockUser)).thenReturn(Optional.of(new Blog()));
+            when(sut.searchBlogByUser(mockUser)).thenReturn(Optional.of(blog));
 
             Optional<Blog> searchedBlog = sut.searchBlogByUser(mockUser);
 
@@ -70,9 +91,9 @@ public class BlogTdd {
         }
 
         @Test
-        @DisplayName("특정 블로그명을 검색합니다 :)")
+        @DisplayName("특정 블로그명을 검색할 수 있어요!!!!")
         void testSearchBlogByTitle() {
-            when(sut.searchBlogByTitle(mockTitle)).thenReturn(Optional.of(new Blog()));
+            when(sut.searchBlogByTitle(mockTitle)).thenReturn(Optional.of(blog));
 
             Optional<Blog> searchedBlog = sut.searchBlogByTitle(mockTitle);
 
@@ -96,13 +117,6 @@ public class BlogTdd {
         @Test
         @DisplayName("사용자의 블로그를 삭제합니다..ㅠㅠ")
         void testDeleteBlog() {
-            Blog blog = Blog.builder()
-                    .blogRepository(sut)
-                    .user(mockUser)
-                    .posts(new ArrayList<>())
-                    .title(mockTitle)
-                    .build();
-
             when(sut.existBlogByUserAndTitle(mockUser, mockTitle)).thenReturn(true);
 
             assertDoesNotThrow(blog::deleteBlog);
@@ -111,39 +125,23 @@ public class BlogTdd {
         }
 
         @Test
-        @DisplayName("사용자 블로그를 삭제할 수 없습니다..ㅠㅠ IllegalState..")
-        void testCannotDeleteNonexistentBlog() {
-            Blog blog = Blog.builder()
-                    .blogRepository(sut)
-                    .user(mockUser)
-                    .posts(new ArrayList<>())
-                    .title(mockTitle)
-                    .build();
-
-            when(sut.existBlogByUserAndTitle(mockUser, mockTitle)).thenReturn(false);
-            doThrow(new IllegalStateException("블로그를 삭제가 되지 않습니다.")).when(sut).deleteBlog(blog);
-
-            assertThrows(IllegalStateException.class, blog::deleteBlog);
-            verify(sut, never()).deleteBlog(blog);
-            assertEquals(0, blog.getPosts().size());
-        }
-
-        @Test
         @DisplayName("사용자 블로그를 삭제할 수 없습니다..ㅠㅠ Runtime..")
-        void testBlogNotDeleted() {
-            Blog blog = Blog.builder()
-                    .blogRepository(sut)
-                    .user(mockUser)
-                    .posts(new ArrayList<>())
-                    .title(mockTitle)
-                    .build();
-
+        void testNotDeleteBlogByRuntime() {
             when(sut.existBlogByUserAndTitle(mockUser, mockTitle)).thenReturn(true);
             doThrow(new RuntimeException("블로그를 삭제가 되지 않습니다.")).when(sut).deleteBlog(blog);
 
             assertThrows(RuntimeException.class, blog::deleteBlog);
             verify(sut, times(1)).deleteBlog(blog);
-            assertEquals(0, blog.getPosts().size());
+        }
+
+        @Test
+        @DisplayName("사용자 블로그를 삭제할 수 없습니다..ㅠㅠ IllegalState..")
+        void testNotDeleteBlogByIllegal() {
+            when(sut.existBlogByUserAndTitle(mockUser, mockTitle)).thenReturn(false);
+            doThrow(new IllegalStateException("블로그를 삭제가 되지 않습니다.")).when(sut).deleteBlog(blog);
+
+            assertThrows(IllegalStateException.class, blog::deleteBlog);
+            verify(sut, times(0)).deleteBlog(blog);
         }
     }
 
