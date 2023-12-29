@@ -12,4 +12,12 @@ public interface BlogRepository {
 
     Optional<Blog> searchBlogByUser(User user);
 
+    Optional<Blog> searchBlogByTitle(BlogTitle title);
+
+    boolean existBlogByTitle(BlogTitle title);
+
+    boolean existBlogByUserAndTitle(User user, BlogTitle title);
+
+    void deleteBlog(Blog blog);
+
 }
