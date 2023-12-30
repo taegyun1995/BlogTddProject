@@ -14,24 +14,21 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
 
-    private PostRepository postRepository;
     private User user;
     private PostTitle title;
     private PostContent content;
     private List<Comment> comments;
 
     @Builder
-    public Post(PostRepository postRepository, User user, PostTitle title, PostContent content, List<Comment> comments) {
-        this.postRepository = postRepository;
+    public Post(User user, PostTitle title, PostContent content, List<Comment> comments) {
         this.user = user;
         this.title = title;
         this.content = content;
         this.comments = comments;
     }
 
-    public static Post of(PostRepository postRepository, User user, PostTitle title, PostContent content) {
+    public static Post of(User user, PostTitle title, PostContent content) {
         return Post.builder()
-                .postRepository(postRepository)
                 .user(user)
                 .title(title)
                 .content(content)
@@ -41,16 +38,27 @@ public class Post {
 
     public void publish() {
         validationPostPublish(user, title, content);
-
-        this.postRepository.createPost(this);
     }
 
-    public static void validationPostPublish(User user, PostTitle title, PostContent content) {
+    public void validationPostPublish(User user, PostTitle title, PostContent content) {
         if (user == null || title == null || content == null) {
             throw new IllegalStateException("게시할 수 없는 게시글입니다.");
         }
+    }
 
-        // 추가 필요..
+    public void modify(User user, String title, String content) {
+        if (title == null || content == null) {
+            throw new IllegalArgumentException("제목 또는 내용은 null일 수 없습니다.");
+        }
+        if (title.length() > 10) {
+            throw new IllegalArgumentException("제목은 10자를 초과할 수 없습니다");
+        }
+        if (content.length() > 1000) {
+            throw new IllegalArgumentException("내용은 1000자를 초과할 수 없습니다");
+        }
+
+        this.title = new PostTitle(title);
+        this.content = new PostContent(content);
     }
 
 }
