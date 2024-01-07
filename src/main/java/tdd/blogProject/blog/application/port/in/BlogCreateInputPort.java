@@ -1,4 +1,4 @@
-package tdd.blogProject.blog.application.port.in.create;
+package tdd.blogProject.blog.application.port.in;
 
 public interface BlogCreateInputPort {
 

@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tdd.blogProject.blog.application.port.in.update.BlogUpdateCommand;
+import tdd.blogProject.blog.application.port.in.BlogUpdateCommand;
 
 import java.util.regex.Pattern;
 

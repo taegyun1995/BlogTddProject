@@ -1,7 +1,7 @@
 package tdd.blogProject.blog.adapter.out.persistence;
 
 import org.springframework.stereotype.Repository;
-import tdd.blogProject.blog.application.port.out.create.BlogCreateOutputPort;
+import tdd.blogProject.blog.application.port.out.BlogCreateOutputPort;
 import tdd.blogProject.blog.domain.Blog;
 import tdd.blogProject.user.domain.UserEntity;
 import tdd.blogProject.user.domain.UserName;

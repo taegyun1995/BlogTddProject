@@ -1,4 +1,4 @@
-package tdd.blogProject.blog.application.port.in.update;
+package tdd.blogProject.blog.application.port.in;
 
 public interface BlogUpdateInputPort {
 

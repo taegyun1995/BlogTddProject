@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tdd.blogProject.blog.application.port.in.create.BlogCreateCommand;
+import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.blog.domain.BlogTitle;
 import tdd.blogProject.user.domain.UserEntity;
 

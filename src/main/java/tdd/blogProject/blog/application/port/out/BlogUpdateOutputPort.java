@@ -1,4 +1,4 @@
-package tdd.blogProject.blog.application.port.out.update;
+package tdd.blogProject.blog.application.port.out;
 
 import tdd.blogProject.blog.domain.BlogTitle;
 

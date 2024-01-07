@@ -1,10 +1,10 @@
-package tdd.blogProject.blog.adapter.in.web.update;
+package tdd.blogProject.blog.adapter.in.web;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tdd.blogProject.blog.application.port.in.update.BlogUpdateCommand;
-import tdd.blogProject.blog.application.port.in.update.BlogUpdateInputPort;
-import tdd.blogProject.blog.application.port.out.update.BlogUpdateOutputPort;
+import tdd.blogProject.blog.application.port.in.BlogUpdateCommand;
+import tdd.blogProject.blog.application.port.in.BlogUpdateInputPort;
+import tdd.blogProject.blog.application.port.out.BlogUpdateOutputPort;
 import tdd.blogProject.blog.domain.BlogTitle;
 
 @Service

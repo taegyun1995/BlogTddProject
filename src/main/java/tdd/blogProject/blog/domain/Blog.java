@@ -2,7 +2,7 @@ package tdd.blogProject.blog.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tdd.blogProject.blog.application.port.in.create.BlogCreateCommand;
+import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.user.domain.UserName;
 
 import static lombok.AccessLevel.PROTECTED;
