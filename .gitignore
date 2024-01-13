@@ -11,7 +11,7 @@ gradlew
 gradlew.bat
 
 out
-!src/main/java/tdd/blogProject/blog/adapter/out
-!src/main/java/tdd/blogProject/blog/application/port/out
+!src/main/java/tdd/blogProject/**/out
+!src/test/java/tdd/blogProject/**/out
 
 settings.gradle
