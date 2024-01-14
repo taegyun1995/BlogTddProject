@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.user.domain.UserName;
 
+import java.util.Objects;
+
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -20,7 +22,21 @@ public class Blog {
     }
 
     public static Blog of(BlogCreateCommand command) {
-        return new Blog(command.getBlogTitle(), command.getUserName());
+        return new Blog(new BlogTitle(command.getBlogTitle().getValue()), command.getUserName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Blog blog = (Blog) o;
+        return Objects.equals(blogTitle, blog.blogTitle) &&
+                Objects.equals(userName, blog.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(blogTitle, userName);
     }
 
 }

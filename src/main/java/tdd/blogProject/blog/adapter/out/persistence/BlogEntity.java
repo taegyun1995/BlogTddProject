@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.blog.domain.BlogTitle;
-import tdd.blogProject.user.domain.UserEntity;
+import tdd.blogProject.user.adapter.out.persistence.UserEntity;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
