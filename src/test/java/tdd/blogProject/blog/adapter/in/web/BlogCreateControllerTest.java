@@ -94,7 +94,7 @@ public class BlogCreateControllerTest {
 
     @Test
     @DisplayName("POST /api/v1/blog with TEXT content type => (415) Unsupported Media Type")
-    void testCreateBlogWithInvalidContentType() throws Exception {
+    void testCreateBlogWithTextContentType() throws Exception {
         BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"), new UserName("Test UserName"));
 
         given()
