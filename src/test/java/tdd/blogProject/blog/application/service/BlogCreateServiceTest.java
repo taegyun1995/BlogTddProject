@@ -1,11 +1,8 @@
 package tdd.blogProject.blog.application.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.blog.application.port.out.BlogCreatePort;
 import tdd.blogProject.blog.domain.BlogTitle;
@@ -14,14 +11,16 @@ import tdd.blogProject.user.domain.UserName;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 public class BlogCreateServiceTest {
 
-    @Mock
-    private BlogCreatePort port;
+    BlogCreatePort port;
+    BlogCreateService sut;
 
-    @InjectMocks
-    private BlogCreateService sut;
+    @BeforeEach
+    void setUp() {
+        port = mock(BlogCreatePort.class);
+        sut = new BlogCreateService(port);
+    }
 
     @Test
     @DisplayName("Create Blog Service Test - Positive Case")
