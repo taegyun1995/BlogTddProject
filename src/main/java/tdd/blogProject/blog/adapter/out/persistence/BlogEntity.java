@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import tdd.blogProject.advice.entityBase.TimeEntity;
 import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.blog.domain.BlogTitle;
 import tdd.blogProject.user.adapter.out.persistence.UserEntity;
@@ -15,7 +16,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "blog")
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-public class BlogEntity {
+public class BlogEntity extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
