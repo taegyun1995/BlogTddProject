@@ -142,7 +142,6 @@ public class BlogCreateControllerTest {
         verify(sut, times(0)).createBlog(any());
     }
 
-
     @Test
     @DisplayName("POST /api/v1/blog => (500) Internal Server Error")
     public void testCreateBlogInternalServerError() throws JsonProcessingException {
