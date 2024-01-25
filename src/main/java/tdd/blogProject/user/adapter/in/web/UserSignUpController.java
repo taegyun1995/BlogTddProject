@@ -20,7 +20,7 @@ public class UserSignUpController {
         this.useCase = useCase;
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/api/v1/user")
     public ResponseEntity<SuccessResponse> signUp(@RequestBody UserSignUpCommand command) {
         useCase.signUp(command);
         return ResponseEntity.status(CREATED).body(new SuccessResponse(SIGNUP_SUCCESS));

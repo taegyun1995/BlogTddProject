@@ -14,4 +14,9 @@ public class UserSignUpCommand {
     private LoginId loginId;
     private Password password;
 
+    public UserSignUpCommand(LoginId loginId, Password password) {
+        this.loginId = loginId;
+        this.password = password;
+    }
+
 }
