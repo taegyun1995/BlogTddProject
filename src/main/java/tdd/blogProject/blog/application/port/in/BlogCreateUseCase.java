@@ -1,7 +1,9 @@
 package tdd.blogProject.blog.application.port.in;
 
+import tdd.blogProject.blog.adapter.in.web.BlogCreateResponse;
+
 public interface BlogCreateUseCase {
 
-    void createBlog(BlogCreateCommand command);
+    BlogCreateResponse createBlog(BlogCreateCommand command);
 
 }

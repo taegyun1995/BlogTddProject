@@ -2,6 +2,7 @@ package tdd.blogProject.blog.application.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tdd.blogProject.blog.adapter.in.web.BlogCreateResponse;
 import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.blog.application.port.in.BlogCreateUseCase;
 import tdd.blogProject.blog.application.port.out.BlogCreatePort;
@@ -18,8 +19,9 @@ public class BlogCreateService implements BlogCreateUseCase {
 
     @Override
     @Transactional
-    public void createBlog(BlogCreateCommand command) {
+    public BlogCreateResponse createBlog(BlogCreateCommand command) {
         blogCreatePort.createBlog(Blog.of(command));
+        return new BlogCreateResponse(command.getBlogTitle().getValue(), command.getUserName().getValue());
     }
 
 }
