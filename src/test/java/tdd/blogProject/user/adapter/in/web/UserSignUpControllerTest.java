@@ -13,7 +13,9 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import tdd.blogProject.user.application.port.in.UserSignUpCommand;
 import tdd.blogProject.user.application.port.in.UserSignUpUserCase;
 import tdd.blogProject.user.domain.LoginId;
+import tdd.blogProject.user.domain.Nickname;
 import tdd.blogProject.user.domain.Password;
+import tdd.blogProject.user.domain.UserName;
 
 import javax.swing.text.html.Option;
 
@@ -150,7 +152,12 @@ class UserSignUpControllerTest {
     }
 
     private UserSignUpCommand getUserSignUpCommand() {
-        return new UserSignUpCommand(new LoginId("test id"), new Password("test pw"));
+        return new UserSignUpCommand(
+                new LoginId("test id"),
+                new Password("test pw"),
+                new UserName("test name"),
+                new Nickname("test nickname")
+        );
     }
 
 }

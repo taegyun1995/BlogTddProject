@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tdd.blogProject.comment.Comment;
+import tdd.blogProject.user.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;
