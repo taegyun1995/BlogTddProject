@@ -22,7 +22,7 @@ public class BlogCreateController {
 
     @PostMapping("/blog")
     public ResponseEntity<BlogCreateResponse> createBlog(
-            @RequestBody BlogCreateCommand command
+            final @RequestBody BlogCreateCommand command
     ) {
         BlogCreateResponse response = useCase.createBlog(command);
         return ResponseEntity.status(CREATED).body(response);

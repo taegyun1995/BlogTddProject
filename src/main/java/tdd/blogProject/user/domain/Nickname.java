@@ -1,7 +1,6 @@
 package tdd.blogProject.user.domain;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tdd.blogProject.advice.exception.custom.BadRequestException;
@@ -13,22 +12,21 @@ import java.util.regex.Pattern;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@Embeddable
 @NoArgsConstructor(access = PROTECTED)
-public class Password {
+public class Nickname {
 
     private static final Pattern PATTERN = Pattern.compile("^.{1,15}$");
 
-    @Column(name = "password")
+    @Column(name = "nickname")
     private String value;
 
-    public Password(String value) {
+    public Nickname(String value) {
         this.value = value;
     }
 
-    public static LoginId of(UserSignUpCommand command) {
-        validate(command.getPassword().value);
-        return new LoginId(command.getPassword().value);
+    public static Nickname of(UserSignUpCommand command) {
+        validate(command.getNickname().value);
+        return new Nickname(command.getNickname().value);
     }
 
     private static void validate(String value) {
