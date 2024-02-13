@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import tdd.blogProject.advice.entityBase.TimeEntity;
 import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.blog.domain.BlogTitle;
-import tdd.blogProject.user.adapter.out.persistence.UserEntity;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -26,21 +25,15 @@ public class BlogEntity extends TimeEntity {
     @Embedded
     private BlogTitle blogTitle;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
-
     @Builder
-    public BlogEntity(Long id, BlogTitle blogTitle, UserEntity userEntity) {
+    public BlogEntity(Long id, BlogTitle blogTitle) {
         this.id = id;
         this.blogTitle = blogTitle;
-        this.userEntity = userEntity;
     }
 
-    public static BlogEntity of(BlogCreateCommand request, UserEntity userEntity) {
+    public static BlogEntity of(BlogCreateCommand command) {
         return BlogEntity.builder()
-                .blogTitle(request.getBlogTitle())
-                .userEntity(userEntity)
+                .blogTitle(command.getBlogTitle())
                 .build();
     }
 

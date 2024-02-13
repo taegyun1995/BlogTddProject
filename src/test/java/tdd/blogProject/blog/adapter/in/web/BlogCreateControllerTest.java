@@ -13,7 +13,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.blog.application.port.in.BlogCreateUseCase;
 import tdd.blogProject.blog.domain.BlogTitle;
-import tdd.blogProject.user.domain.UserName;
 
 import java.util.Optional;
 
@@ -45,7 +44,7 @@ public class BlogCreateControllerTest {
     @Test
     @DisplayName("POST /api/v1/blog => (201) Created")
     void testCreateBlog() throws Exception {
-        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"), new UserName("Test UserName"));
+        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"));
 
         given()
                 .contentType(JSON)
@@ -77,7 +76,7 @@ public class BlogCreateControllerTest {
     @Test
     @DisplayName("POST /not_found => (404) Not Found")
     public void testCreateBlogNotFound() throws JsonProcessingException {
-        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"), new UserName("Test UserName"));
+        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"));
 
         given()
                 .contentType(JSON)
@@ -94,7 +93,7 @@ public class BlogCreateControllerTest {
     @Test
     @DisplayName("POST /api/v1/blog with TEXT content type => (415) Unsupported Media Type")
     void testCreateBlogWithTextContentType() throws Exception {
-        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"), new UserName("Test UserName"));
+        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"));
 
         given()
                 .contentType(ContentType.TEXT)
@@ -111,7 +110,7 @@ public class BlogCreateControllerTest {
     @Test
     @DisplayName("POST /api/v1/blog with XML content type => (415) Unsupported Media Type")
     void testCreateBlogWithXmlContentType() throws Exception {
-        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"), new UserName("Test UserName"));
+        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"));
 
         given()
                 .contentType(ContentType.XML)
@@ -128,7 +127,7 @@ public class BlogCreateControllerTest {
     @Test
     @DisplayName("POST /api/v1/blog with HTML content type => (415) Unsupported Media Type")
     void testCreateBlogWithHtmlContentType() throws Exception {
-        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"), new UserName("Test UserName"));
+        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"));
 
         given()
                 .contentType(ContentType.HTML)
@@ -145,7 +144,7 @@ public class BlogCreateControllerTest {
     @Test
     @DisplayName("POST /api/v1/blog => (500) Internal Server Error")
     public void testCreateBlogInternalServerError() throws JsonProcessingException {
-        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"), new UserName("Test UserName"));
+        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"));
 
         doThrow(new RuntimeException("Internal Server Error")).when(sut).createBlog(any());
 

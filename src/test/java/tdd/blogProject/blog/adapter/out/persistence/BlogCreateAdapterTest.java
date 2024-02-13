@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
 import tdd.blogProject.blog.domain.Blog;
 import tdd.blogProject.blog.domain.BlogTitle;
-import tdd.blogProject.user.adapter.out.persistence.UserEntity;
-import tdd.blogProject.user.domain.UserName;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -26,8 +24,8 @@ public class BlogCreateAdapterTest {
     @Test
     @DisplayName("Create Blog Adapter Test - Positive Case")
     void testBlogCreateAdapterPositiveCase() {
-        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"), new UserName("Test User"));
-        BlogEntity blog = BlogEntity.of(command, createDummyUser());
+        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"));
+        BlogEntity blog = BlogEntity.of(command);
 
         when(repository.save(blog)).thenReturn(blog);
         sut.createBlog(Blog.of(command));
@@ -40,13 +38,6 @@ public class BlogCreateAdapterTest {
     void testBlogCreateAdapterNegativeCaseNullCommand() {
         assertThrows(NullPointerException.class, () -> sut.createBlog(null));
         verify(repository, times(0)).save(any());
-    }
-
-    private UserEntity createDummyUser() {
-        UserName dummyUserName = new UserName("dummyUser");
-        return UserEntity.builder()
-                .userName(dummyUserName)
-                .build();
     }
 
 }

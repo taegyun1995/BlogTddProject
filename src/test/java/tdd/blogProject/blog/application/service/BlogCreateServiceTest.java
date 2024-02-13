@@ -25,7 +25,7 @@ public class BlogCreateServiceTest {
     @Test
     @DisplayName("Create Blog Service Test - Positive Case")
     void testCreateBlogServicePositiveCase() {
-        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"), new UserName("Test User"));
+        BlogCreateCommand command = new BlogCreateCommand(new BlogTitle("Test Blog Title"));
 
         sut.createBlog(command);
 

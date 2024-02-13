@@ -21,7 +21,7 @@ public class BlogCreateService implements BlogCreateUseCase {
     @Transactional
     public BlogCreateResponse createBlog(BlogCreateCommand command) {
         blogCreatePort.createBlog(Blog.of(command));
-        return new BlogCreateResponse(command.getBlogTitle().getValue(), command.getUserName().getValue());
+        return BlogCreateResponse.of(command);
     }
 
 }

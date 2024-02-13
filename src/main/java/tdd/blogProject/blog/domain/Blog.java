@@ -3,7 +3,6 @@ package tdd.blogProject.blog.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
-import tdd.blogProject.user.domain.UserName;
 
 import java.util.Objects;
 
@@ -14,15 +13,13 @@ import static lombok.AccessLevel.PROTECTED;
 public class Blog {
 
     private BlogTitle blogTitle;
-    private UserName userName;
 
-    public Blog(BlogTitle blogTitle, UserName userName) {
+    public Blog(BlogTitle blogTitle) {
         this.blogTitle = blogTitle;
-        this.userName = userName;
     }
 
     public static Blog of(BlogCreateCommand command) {
-        return new Blog(new BlogTitle(command.getBlogTitle().getValue()), command.getUserName());
+        return new Blog(new BlogTitle(command.getBlogTitle().getValue()));
     }
 
     @Override
@@ -30,13 +27,12 @@ public class Blog {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Blog blog = (Blog) o;
-        return Objects.equals(blogTitle, blog.blogTitle) &&
-                Objects.equals(userName, blog.userName);
+        return Objects.equals(blogTitle, blog.blogTitle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(blogTitle, userName);
+        return Objects.hash(blogTitle);
     }
 
 }
