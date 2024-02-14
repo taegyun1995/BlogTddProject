@@ -2,6 +2,7 @@ package tdd.blogProject.blog.application.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tdd.blogProject.blog.adapter.in.web.BlogUpdateResponse;
 import tdd.blogProject.blog.application.port.in.BlogUpdateCommand;
 import tdd.blogProject.blog.application.port.in.BlogUpdateUseCase;
 import tdd.blogProject.blog.application.port.out.BlogUpdatePort;
@@ -18,8 +19,9 @@ public class BlogUpdateService implements BlogUpdateUseCase {
 
     @Override
     @Transactional
-    public void updateBlogTitle(Long blogId, BlogUpdateCommand command) {
+    public BlogUpdateResponse updateBlogTitle(Long blogId, BlogUpdateCommand command) {
         blogUpdatePort.updateBlogTitle(blogId, BlogTitle.of(command));
+        return BlogUpdateResponse.of(command);
     }
 
 }

@@ -16,12 +16,12 @@ public class BlogUpdateController {
     }
 
     @PatchMapping("/blog/{blogId}")
-    public ResponseEntity<Void> updateBlogName(
+    public ResponseEntity<BlogUpdateResponse> updateBlogName(
             @PathVariable(value = "blogId") Long blogId,
             @RequestBody BlogUpdateCommand command
     ) {
-        blogUpdateUsecase.updateBlogTitle(blogId, command);
-        return ResponseEntity.ok(null);
+        BlogUpdateResponse response = blogUpdateUsecase.updateBlogTitle(blogId, command);
+        return ResponseEntity.ok(response);
     }
 
 }
