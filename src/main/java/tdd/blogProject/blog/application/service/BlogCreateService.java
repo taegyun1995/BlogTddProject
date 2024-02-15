@@ -23,7 +23,7 @@ public class BlogCreateService implements BlogCreateUseCase {
         Blog blog = Blog.of(command);
         blogCreatePort.createBlog(blog);
 
-        return blogCreatePort.createResponse(blog);
+        return BlogCreateResponse.of(blog);
     }
 
 }
