@@ -2,7 +2,7 @@ package tdd.blogProject.blog.adapter.in.web;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
+import tdd.blogProject.blog.domain.Blog;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -16,8 +16,8 @@ public class BlogCreateResponse {
         this.title = title;
     }
 
-    public static BlogCreateResponse of(BlogCreateCommand command) {
-        return new BlogCreateResponse(command.getBlogTitle().getValue());
+    public static BlogCreateResponse of(Blog blog) {
+        return new BlogCreateResponse(blog.getBlogTitle().getValue());
     }
 
 }

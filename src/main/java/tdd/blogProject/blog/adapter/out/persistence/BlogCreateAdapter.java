@@ -1,6 +1,7 @@
 package tdd.blogProject.blog.adapter.out.persistence;
 
 import org.springframework.stereotype.Repository;
+import tdd.blogProject.blog.adapter.in.web.BlogCreateResponse;
 import tdd.blogProject.blog.application.port.out.BlogCreatePort;
 import tdd.blogProject.blog.domain.Blog;
 
@@ -15,11 +16,13 @@ public class BlogCreateAdapter implements BlogCreatePort {
 
     @Override
     public void createBlog(Blog blog) {
-        BlogEntity blogEntity = BlogEntity.builder()
-                .blogTitle(blog.getBlogTitle())
-                .build();
-
+        BlogEntity blogEntity = BlogEntity.of(blog);
         jpaBlogRepository.save(blogEntity);
+    }
+
+    @Override
+    public BlogCreateResponse createResponse(Blog blog) {
+        return BlogCreateResponse.of(blog);
     }
 
 }

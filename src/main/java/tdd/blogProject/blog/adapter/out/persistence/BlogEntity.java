@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tdd.blogProject.advice.entityBase.TimeEntity;
-import tdd.blogProject.blog.application.port.in.BlogCreateCommand;
+import tdd.blogProject.blog.domain.Blog;
 import tdd.blogProject.blog.domain.BlogTitle;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -31,9 +31,9 @@ public class BlogEntity extends TimeEntity {
         this.blogTitle = blogTitle;
     }
 
-    public static BlogEntity of(BlogCreateCommand command) {
+    public static BlogEntity of(Blog blog) {
         return BlogEntity.builder()
-                .blogTitle(command.getBlogTitle())
+                .blogTitle(blog.getBlogTitle())
                 .build();
     }
 

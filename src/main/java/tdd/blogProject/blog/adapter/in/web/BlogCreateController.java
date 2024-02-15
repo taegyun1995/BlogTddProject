@@ -14,7 +14,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequestMapping("/api/v1")
 public class BlogCreateController {
 
-    private BlogCreateUseCase useCase;
+    private final BlogCreateUseCase useCase;
 
     public BlogCreateController(BlogCreateUseCase useCase) {
         this.useCase = useCase;
@@ -22,7 +22,7 @@ public class BlogCreateController {
 
     @PostMapping("/blog")
     public ResponseEntity<BlogCreateResponse> createBlog(
-            final @RequestBody BlogCreateCommand command
+            @RequestBody BlogCreateCommand command
     ) {
         BlogCreateResponse response = useCase.createBlog(command);
         return ResponseEntity.status(CREATED).body(response);

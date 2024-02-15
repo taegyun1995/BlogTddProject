@@ -20,8 +20,10 @@ public class BlogCreateService implements BlogCreateUseCase {
     @Override
     @Transactional
     public BlogCreateResponse createBlog(BlogCreateCommand command) {
-        blogCreatePort.createBlog(Blog.of(command));
-        return BlogCreateResponse.of(command);
+        Blog blog = Blog.of(command);
+        blogCreatePort.createBlog(blog);
+
+        return blogCreatePort.createResponse(blog);
     }
 
 }
