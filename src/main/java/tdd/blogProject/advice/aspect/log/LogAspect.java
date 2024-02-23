@@ -1,4 +1,4 @@
-package tdd.blogProject.aspect;
+package tdd.blogProject.advice.aspect.log;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -32,17 +32,19 @@ public class LogAspect {
         log.info("Method return value: {}", returnValue);
     }
 
-    @AfterThrowing(pointcut = "inBackendPackage()", throwing = "ex")
+    @AfterThrowing(pointcut = "inBackendPackage()", throwing = "e")
     protected void logAfterThrowing(JoinPoint joinPoint, Exception e) {
         log.error(
-                "An error occurred while executing method: {} " +
-                        "in class: {} " +
-                        "with arguments: {}",
+                "An error occurred while executing method: {} "
+                        + "in class: {} "
+                        + "with arguments: {}. "
+                        + "Error message: {}",
                 joinPoint.getSignature().toShortString(),
                 joinPoint.getTarget().getClass().getName(),
                 Arrays.toString(joinPoint.getArgs()),
-                e
+                e.getMessage()
         );
     }
+
 
 }
