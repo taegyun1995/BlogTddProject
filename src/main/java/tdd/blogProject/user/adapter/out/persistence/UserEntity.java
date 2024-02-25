@@ -5,8 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tdd.blogProject.user.domain.User;
-import tdd.blogProject.user.domain.UserName;
+import tdd.blogProject.user.domain.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -18,20 +17,35 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private Long id;
+
+    @Embedded
+    private LoginId loginId;
+
+    @Embedded
+    private Password password;
 
     @Embedded
     private UserName userName;
 
+    @Embedded
+    private NickName nickName;
+
     @Builder
-    public UserEntity(UserName userName) {
+    public UserEntity(LoginId loginId, Password password, UserName userName, NickName nickName) {
+        this.loginId = loginId;
+        this.password = password;
         this.userName = userName;
+        this.nickName = nickName;
     }
 
     public static UserEntity of(User user) {
         return UserEntity.builder()
+                .loginId(user.getLoginId())
+                .password(user.getPassword())
                 .userName(user.getUserName())
+                .nickName(user.getNickname())
                 .build();
     }
 

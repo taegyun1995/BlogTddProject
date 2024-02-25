@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tdd.blogProject.advice.exception.custom.BadRequestException;
 import tdd.blogProject.advice.exception.custom.LengthRequiredException;
-import tdd.blogProject.user.application.port.in.UserSignUpCommand;
+import tdd.blogProject.user.application.port.in.SignUpCommand;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -27,7 +27,7 @@ public class LoginId {
         this.value = value;
     }
 
-    public static LoginId of(UserSignUpCommand command) {
+    public static LoginId of(SignUpCommand command) {
         validate(command.getLoginId().value);
         return new LoginId(command.getLoginId().value);
     }

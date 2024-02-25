@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import tdd.blogProject.advice.exception.ExceptionCodeConst;
 import tdd.blogProject.advice.exception.custom.BadRequestException;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -37,6 +38,19 @@ public class UserName {
         if (!PATTERN.matcher(value).matches()) {
             throw new IllegalArgumentException("유저 이름 정규표현식 메시지 미정");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserName userName = (UserName) o;
+        return Objects.equals(getValue(), userName.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getValue());
     }
 
 }

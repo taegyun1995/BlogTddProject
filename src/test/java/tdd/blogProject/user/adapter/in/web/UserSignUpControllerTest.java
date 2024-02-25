@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import tdd.blogProject.user.application.port.in.UserSignUpCommand;
-import tdd.blogProject.user.application.port.in.UserSignUpUserCase;
+import tdd.blogProject.user.application.port.in.SignUpCommand;
+import tdd.blogProject.user.application.port.in.SignUpUseCase;
 import tdd.blogProject.user.domain.LoginId;
-import tdd.blogProject.user.domain.Nickname;
+import tdd.blogProject.user.domain.NickName;
 import tdd.blogProject.user.domain.Password;
 import tdd.blogProject.user.domain.UserName;
 
@@ -33,7 +33,7 @@ class UserSignUpControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    UserSignUpUserCase sut;
+    SignUpUseCase sut;
 
     @LocalServerPort
     int port;
@@ -56,7 +56,7 @@ class UserSignUpControllerTest {
                 .statusCode(CREATED.value())
                 .log().ifValidationFails(ALL);
 
-        verify(sut, times(1)).signUp(any());
+        verify(sut, times(1)).signUp(any(), any());
     }
 
     @Test
@@ -71,7 +71,7 @@ class UserSignUpControllerTest {
                 .statusCode(BAD_REQUEST.value())
                 .log().ifValidationFails(ALL);
 
-        verify(sut, times(0)).signUp(any());
+        verify(sut, times(0)).signUp(any(), any());
     }
 
     @Test
@@ -86,7 +86,7 @@ class UserSignUpControllerTest {
                 .statusCode(NOT_FOUND.value())
                 .log().ifValidationFails(ALL);
 
-        verify(sut, times(0)).signUp(any());
+        verify(sut, times(0)).signUp(any(), any());
     }
 
     @Test
@@ -101,7 +101,7 @@ class UserSignUpControllerTest {
                 .statusCode(UNSUPPORTED_MEDIA_TYPE.value())
                 .log().ifValidationFails(ALL);
 
-        verify(sut, times(0)).signUp(any());
+        verify(sut, times(0)).signUp(any(), any());
     }
 
     @Test
@@ -116,7 +116,7 @@ class UserSignUpControllerTest {
                 .statusCode(UNSUPPORTED_MEDIA_TYPE.value())
                 .log().ifValidationFails(ALL);
 
-        verify(sut, times(0)).signUp(any());
+        verify(sut, times(0)).signUp(any(), any());
     }
 
     @Test
@@ -131,13 +131,13 @@ class UserSignUpControllerTest {
                 .statusCode(UNSUPPORTED_MEDIA_TYPE.value())
                 .log().ifValidationFails(ALL);
 
-        verify(sut, times(0)).signUp(any());
+        verify(sut, times(0)).signUp(any(), any());
     }
 
     @Test
     @DisplayName("POST /api/v1/user => (500) Internal Server Error")
     void negativeCaseUserSignUpInternalServerError() throws JsonProcessingException {
-        doThrow(new RuntimeException("Internal Server Error")).when(sut).signUp(any());
+        doThrow(new RuntimeException("Internal Server Error")).when(sut).signUp(any(), any());
 
         given()
                 .contentType(JSON)
@@ -148,15 +148,15 @@ class UserSignUpControllerTest {
                 .statusCode(INTERNAL_SERVER_ERROR.value())
                 .log().ifValidationFails(ALL);
 
-        verify(sut, times(1)).signUp(any());
+        verify(sut, times(1)).signUp(any(), any());
     }
 
-    private UserSignUpCommand getUserSignUpCommand() {
-        return new UserSignUpCommand(
+    private SignUpCommand getUserSignUpCommand() {
+        return new SignUpCommand(
                 new LoginId("test id"),
                 new Password("test pw"),
                 new UserName("test name"),
-                new Nickname("test nickname")
+                new NickName("test nickname")
         );
     }
 
