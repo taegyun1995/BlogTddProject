@@ -2,6 +2,7 @@ package tdd.blogProject.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,23 +16,19 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
+        return http.csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        (authorize) -> authorize.requestMatchers("/signup")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
-                )
-                .logout(
-                        (logout) -> logout.logoutSuccessUrl("/login")
-                                .invalidateHttpSession(true)
+                        (authorize) -> authorize
+                                .requestMatchers("/api/v1/signup").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
                 )
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
-        return http.build();
+                )
+                .build();
     }
 
     @Bean
