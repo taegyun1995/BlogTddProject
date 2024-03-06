@@ -17,19 +17,22 @@ public class SignUpResponse {
     private LoginId loginId;
     private UserName userName;
     private NickName nickName;
+    private String accessToken;
 
     @Builder
-    public SignUpResponse(LoginId loginId, UserName userName, NickName nickName) {
+    public SignUpResponse(LoginId loginId, UserName userName, NickName nickName, String accessToken) {
         this.loginId = loginId;
         this.userName = userName;
         this.nickName = nickName;
+        this.accessToken = accessToken;
     }
 
-    public static SignUpResponse of(User user) {
+    public static SignUpResponse of(User user, String accessToken) {
         return SignUpResponse.builder()
                 .loginId(user.getLoginId())
                 .userName(user.getUserName())
                 .nickName(user.getNickname())
+                .accessToken(accessToken)
                 .build();
     }
 

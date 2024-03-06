@@ -9,10 +9,13 @@ import tdd.blogProject.user.domain.User;
 @Component
 public class AccessTokenCreateService implements AccessTokenCreateUseCase {
 
+    private final JwtTokenCreatePort jwtTokenCreatePort;
+
     @Value("${jwt.access_token_expiration_time}")
     private long ACCESS_TOKEN_EXPIRATION_TIME;
 
-    private final JwtTokenCreatePort jwtTokenCreatePort;
+    @Value("${jwt.key}")
+    private String SECRET_KEY;
 
     public AccessTokenCreateService(JwtTokenCreatePort jwtTokenCreatePort) {
         this.jwtTokenCreatePort = jwtTokenCreatePort;
@@ -20,7 +23,7 @@ public class AccessTokenCreateService implements AccessTokenCreateUseCase {
 
     @Override
     public String createAccessToken(User user) {
-        return jwtTokenCreatePort.createJwtToken(user, ACCESS_TOKEN_EXPIRATION_TIME);
+        return jwtTokenCreatePort.createJwtToken(user, SECRET_KEY, ACCESS_TOKEN_EXPIRATION_TIME);
     }
 
 }

@@ -18,7 +18,7 @@ public class SignUpController {
         this.useCase = useCase;
     }
 
-    @PostMapping("/user")
+    @PostMapping("/signup")
     public ResponseEntity<SignUpResponse> signUp(
             @RequestHeader("user-agent") String userAgent,
             @RequestBody SignUpCommand command

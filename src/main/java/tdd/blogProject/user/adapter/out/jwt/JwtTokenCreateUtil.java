@@ -1,32 +1,45 @@
 package tdd.blogProject.user.adapter.out.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 import tdd.blogProject.user.application.port.out.JwtTokenCreatePort;
 import tdd.blogProject.user.domain.User;
 
-import java.security.Key;
 import java.util.Date;
 
 @Component
 public class JwtTokenCreateUtil implements JwtTokenCreatePort {
 
-    @Value("${jwt.key}")
-    private String SECRET_KEY;
-
-    @Override
-    public String createJwtToken(User user, long expirationTime) {
-        return Jwts.builder()
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(getSigningKey())
-                .compact();
+    public static boolean isExpired(String token, String secretKey) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration()
+                .before(new Date());
     }
 
-    private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    public static String getUserName(String token, String secretKey) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userName", String.class);
+    }
+
+    @Override
+    public String createJwtToken(User user, String secretKey, long expirationTime) {
+        Claims claims = Jwts.claims();
+        claims.put("userName", user.getUserName().getValue());
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
     }
 
 }

@@ -4,6 +4,6 @@ import tdd.blogProject.user.domain.User;
 
 public interface JwtTokenCreatePort {
 
-    String createJwtToken(User user, long expirationTime);
+    String createJwtToken(User user, String secretKey, long expirationTime);
 
 }

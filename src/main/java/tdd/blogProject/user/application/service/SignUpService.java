@@ -27,10 +27,9 @@ public class SignUpService implements SignUpUseCase {
         User user = User.of(command);
         signUpPort.signUp(user);
 
-        accessTokenCreateUseCase.createAccessToken(user);
-        refreshTokenCreateUseCase.createRefreshToken(user);
+        String accessToken = accessTokenCreateUseCase.createAccessToken(user);
 
-        return SignUpResponse.of(user);
+        return SignUpResponse.of(user, accessToken);
     }
 
 }

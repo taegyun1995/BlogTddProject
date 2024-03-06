@@ -9,10 +9,13 @@ import tdd.blogProject.user.domain.User;
 @Component
 public class RefreshTokenCreateService implements RefreshTokenCreateUseCase {
 
+    private final JwtTokenCreatePort jwtTokenCreatePort;
+
     @Value("${jwt.refresh_token_expiration_time}")
     private long REFRESH_TOKEN_EXPIRATION_TIME;
 
-    private final JwtTokenCreatePort jwtTokenCreatePort;
+    @Value("${jwt.key}")
+    private String SECRET_KEY;
 
     public RefreshTokenCreateService(JwtTokenCreatePort jwtTokenCreatePort) {
         this.jwtTokenCreatePort = jwtTokenCreatePort;
@@ -20,7 +23,7 @@ public class RefreshTokenCreateService implements RefreshTokenCreateUseCase {
 
     @Override
     public String createRefreshToken(User user) {
-        return jwtTokenCreatePort.createJwtToken(user, REFRESH_TOKEN_EXPIRATION_TIME);
+        return jwtTokenCreatePort.createJwtToken(user, SECRET_KEY, REFRESH_TOKEN_EXPIRATION_TIME);
     }
 
 }
